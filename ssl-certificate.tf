@@ -78,7 +78,7 @@ resource "google_certificate_manager_certificate_map_entry" "second_entry" {
 # Create a CloudFlare origin certificate in GCP from CloudFlare
 
 resource "google_compute_ssl_certificate" "cloudflare_origin_wildcard" {
-  name_prefix = "${local.name}-cloudflare-origin-certificate"
+  name_prefix = "${local.name}-cf-origin-cert"
   private_key = tls_private_key.origin_private_key.private_key_pem
   certificate = cloudflare_origin_ca_certificate.origin_certificate.certificate
   project   = var.project_id
