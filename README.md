@@ -17,4 +17,5 @@ After deployment you will get a 403 from CloudRun untill you turn on IAP for the
 
 DNS Authorization for Google managed wildcard certificate can take about ~15 minutes 
 
+
 Some code borrowed from https://github.com/r-teller/gcp_service_extension_waf
