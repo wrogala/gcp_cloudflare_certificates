@@ -9,12 +9,12 @@
 3. Cloudflare DNS zone ID - cloudflare_zone_id
 4. A domain that has been pointed at cloudflare - change that in locals.tf
 
-* You can pass the above variables in during terraform apply or use environment variables
+You can pass the above variables in during terraform apply or use environment variables
 
-### By default, the GLB will use the Google managed certificate via certificate map, you can change this by adding the ssl_certificates option to the google_compute_target_https_proxy resource (load_balancer.tf)
+By default, the GLB will use the Google managed certificate via certificate map, you can change this by adding the ssl_certificates option to the google_compute_target_https_proxy resource (load_balancer.tf)
 
-### After deployment you will get a 403 from CloudRun untill you turn on IAP for the back-end
+After deployment you will get a 403 from CloudRun untill you turn on IAP for the back-end
 
-### DNS Authorization for Google managed wildcard certificate can take about ~15 minutes 
+DNS Authorization for Google managed wildcard certificate can take about ~15 minutes 
 
-### Some code borrowed from https://github.com/r-teller/gcp_service_extension_waf
+Some code borrowed from https://github.com/r-teller/gcp_service_extension_waf

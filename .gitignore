@@ -5,7 +5,8 @@
 
 *.terraform.*
 
-
+# Terraform generate files
+account_id.txt
 
 # .tfstate files
 *.tfstate
