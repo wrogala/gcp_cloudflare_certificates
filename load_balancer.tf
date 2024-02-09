@@ -124,7 +124,7 @@ resource "google_compute_security_policy" "cloudflare_addresses" {
     match {
       versioned_expr = "SRC_IPS_V1"
       config {
-        src_ip_ranges = flatten(slice("${local.cloudflare_ips.result.ipv4_cidrs}", 11 , length(local.cloudflare_ips.result.ipv4_cidrs)))
+        src_ip_ranges = flatten(slice("${local.cloudflare_ips.result.ipv4_cidrs}", 10 , length(local.cloudflare_ips.result.ipv4_cidrs)))
       }
     }
     description = "Allow access from CloudFlare public ip ranges 2"
