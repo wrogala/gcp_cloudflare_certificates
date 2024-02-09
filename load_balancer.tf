@@ -88,7 +88,7 @@ resource "google_compute_url_map" "gcr_echo_url_map" {
 # Fetch CloudFlare ip address list from their API
 
 data "http" "get_cloudflare_ips" {
-  url = "https://api.cloudflare.com/client/v4/ips"
+  url = var.cloudflare_api
 }
 
 locals {
