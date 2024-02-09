@@ -83,6 +83,7 @@ resource "google_compute_backend_service" "gcr_echo_backend" {
   load_balancing_scheme = "EXTERNAL_MANAGED"
   protocol              = "HTTPS"
   enable_cdn            = false
+  security_policy       = google_compute_security_policy.cloudflare_addresses.self_link
 
   dynamic "backend" {
     for_each = google_compute_region_network_endpoint_group.gcr_echo_neg
