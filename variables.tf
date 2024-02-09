@@ -12,3 +12,8 @@ variable "regions" {
   type    = list(string)
   default = ["us-central1"]
 }
+
+variable "cloudflare_api" {
+  default = "https://api.cloudflare.com/client/v4/ips"
+  type = string
+}

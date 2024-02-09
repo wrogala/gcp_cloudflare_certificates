@@ -84,3 +84,60 @@ resource "google_compute_url_map" "gcr_echo_url_map" {
    }
   }
 }
+
+# Fetch CloudFlare ip address list from their API
+
+data "http" "get_cloudflare_ips" {
+  url = var.cloudflare_api
+}
+
+locals {
+  cloudflare_ips = jsondecode(data.http.get_cloudflare_ips.response_body)
+}
+
+# output "show_cloudflare_ips" {
+#   value = local.cloudflare_ips.result.ipv4_cidrs
+# }
+
+# Create a Cloud Armor policy with CloudFlare ip address list
+
+resource "google_compute_security_policy" "cloudflare_addresses" {
+ # for_each = local.cloudflare_ips.result.ipv4_cidrs
+  name   = format("l7-glb-cf-policy-%s", random_id.id.hex)
+  project = var.project_id
+
+  rule {
+    action   = "allow"
+    priority = "100"
+    match {
+      versioned_expr = "SRC_IPS_V1"
+      config {
+        src_ip_ranges = flatten(slice("${local.cloudflare_ips.result.ipv4_cidrs}", 0, 10))
+      }
+    }
+    description = "Allow access from CloudFlare public ip ranges 1"
+  }
+
+    rule {
+    action   = "allow"
+    priority = "110"
+    match {
+      versioned_expr = "SRC_IPS_V1"
+      config {
+        src_ip_ranges = flatten(slice("${local.cloudflare_ips.result.ipv4_cidrs}", 10 , length(local.cloudflare_ips.result.ipv4_cidrs)))
+      }
+    }
+    description = "Allow access from CloudFlare public ip ranges 2"
+  }
+ rule {
+    action   = "deny(403)"
+    priority = "2147483647"
+    match {
+      versioned_expr = "SRC_IPS_V1"
+      config {
+        src_ip_ranges = ["*"]
+      }
+    }
+    description = "Default Deny"
+  }
+}
